@@ -1,0 +1,33 @@
+name: Build and Push to Harbor
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-push:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to Harbor
+        run: |
+          echo "${{ secrets.HARBOR_ROBOT_TOKEN }}" | docker login harbor.local:8443 \
+            -u '${{ secrets.HARBOR_ROBOT_USER }}' --password-stdin
+
+      - name: Build Docker image
+        run: |
+          docker build -t harbor.local:8443/library/secu-stage-app:${{ github.sha }} .
+          docker tag harbor.local:8443/library/secu-stage-app:${{ github.sha }} \
+            harbor.local:8443/library/secu-stage-app:latest
+
+      - name: Push image to Harbor
+        run: |
+          docker push harbor.local:8443/library/secu-stage-app:${{ github.sha }}
+          docker push harbor.local:8443/library/secu-stage-app:latest
+
+      - name: Logout
+        if: always()
+        run: docker logout harbor.local:8443
