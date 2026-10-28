@@ -1,3 +1,4 @@
+[README.md](https://github.com/user-attachments/files/34100098/README.md)
 # DevSecOps Pipeline — Trivy · Harbor · Kubernetes (k3d)
 
 Pipeline DevSecOps complet automatisant la construction, le scan de sécurité,
@@ -52,21 +53,13 @@ l'environnement de test (load average à 15 sur 4 vCPU), provoquant une
 instabilité générale. Décision prise : migration vers une infrastructure
 cloud (Azure) avec des ressources dédiées.
 
-*Le détail complet de la démarche de diagnostic est disponible dans
-[`docs/rapport-stage.pdf`](docs/rapport-stage.pdf).*
-
-## Architecture
-
-![Architecture](docs/architecture.png)
-
 ## Structure du dépôt
 
 ```
 ├── app/                    # Application de démonstration + Dockerfile
 ├── .github/workflows/      # Pipeline CI/CD GitHub Actions
 ├── k8s/                    # Manifestes de déploiement Kubernetes
-├── helm-values/            # Configuration Helm (Harbor, registres)
-└── docs/                   # Rapport complet, architecture, captures d'écran
+└── helm-values/            # Configuration Helm (Harbor, registres)
 ```
 
 ## Résultats
@@ -75,11 +68,10 @@ cloud (Azure) avec des ressources dédiées.
 - Pipeline complet validé de bout en bout en démonstration live
 - Scan continu opérationnel sur l'ensemble du cluster
 
-## Documentation complète
+## Sécurité du dépôt
 
-Le rapport de stage complet (contexte, méthodologie, conception,
-démarche de diagnostic détaillée) est disponible dans
-[`docs/rapport-stage.pdf`](docs/rapport-stage.pdf).
+Les valeurs sensibles (mots de passe, tokens) sont remplacées par des
+`<PLACEHOLDERS>`, à renseigner avant tout déploiement.
 
 ## Auteur
 
